@@ -8,11 +8,12 @@ public:
 	~VectorList();
 
 	void Add(Vector2 start, Vector2 end);
-	void Print();
-	void Draw();
+	void Draw(VectorListElement* selectedVector, VectorListElement* secondSelectedVector);
+	VectorListElement* GetHead();
+	void SetHead(VectorListElement* newHead);
 
 private:
-	void DrawTriangleAtEnd(Vector2 start, Vector2 end, float size, Color color);
+	void DrawArrow(Vector2 start, Vector2 end, float size, Color color);
 	VectorListElement* m_head;
 };
 

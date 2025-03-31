@@ -17,6 +17,18 @@ Vector2 VectorListElement::GetEnd()
 	return m_end;
 }
 
+void VectorListElement::MoveStart(float x, float y)
+{
+	m_start.x += x;
+	m_start.y += y;
+}
+
+void VectorListElement::MoveEnd(float x, float y)
+{
+	m_end.x += x;
+	m_end.y += y;
+}
+
 VectorListElement* VectorListElement::GetNext()
 {
 	return m_next;

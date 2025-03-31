@@ -34,30 +34,40 @@ void VectorList::Add(Vector2 start, Vector2 end)
     }
 }
 
-void VectorList::Print()
-{
-    VectorListElement* current = m_head;
-    
-        std::cout << "Start: (" << current->GetStart().x << ", " << current->GetStart().y << "), "
-            << "End: (" << current->GetEnd().x << ", " << current->GetEnd().y << ")" << std::endl;
-        current = current->GetNext();
-    
-}
-
-void VectorList::Draw() 
+void VectorList::Draw(VectorListElement* selectedVector, VectorListElement* secondSelectedVector)
 {
     VectorListElement* currentVector = m_head;
     while (currentVector != nullptr)
     {
+        Color lineColor;
+        if (currentVector == selectedVector || currentVector == secondSelectedVector)
+        {
+            lineColor = RED;
+        }
+        else
+        {
+            lineColor = BLUE;
+        }
+
         DrawCircleV(currentVector->GetStart(), 5, RED);
-        DrawLineV(currentVector->GetStart(), currentVector->GetEnd(), BLUE);
-        DrawTriangleAtEnd(currentVector->GetStart(), currentVector->GetEnd(), 10, BLUE);
+        DrawLineV(currentVector->GetStart(), currentVector->GetEnd(), lineColor);
+        DrawArrow(currentVector->GetStart(), currentVector->GetEnd(), 10, lineColor);
 
         currentVector = currentVector->GetNext();
     }
 }
 
-void VectorList::DrawTriangleAtEnd(Vector2 start, Vector2 end, float size, Color color)
+VectorListElement* VectorList::GetHead()
+{
+    return m_head;
+}
+
+void VectorList::SetHead(VectorListElement* newHead)
+{
+    m_head = newHead;
+}
+
+void VectorList::DrawArrow(Vector2 start, Vector2 end, float size, Color color)
 {
     float angle = atan2f(end.y - start.y, end.x - start.x);
     Vector2 arrowPoint1 = { end.x - size * cosf(angle + PI / 6), end.y - size * sinf(angle + PI / 6) };

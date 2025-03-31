@@ -7,6 +7,8 @@ public:
 		VectorListElement(Vector2 start, Vector2 end);
 		Vector2 GetStart();
 		Vector2 GetEnd();
+		void MoveStart(float x, float y);
+		void MoveEnd(float x, float y);
 		VectorListElement* GetNext();
 		void SetNext(VectorListElement* next);
 
