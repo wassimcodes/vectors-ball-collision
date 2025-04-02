@@ -12,7 +12,7 @@ void Button::DrawButton()
 	DrawText(m_text.c_str(), m_button.x + 20, m_button.y + 5, 20, BLACK);
 }
 
-bool Button::IsPressed()
+bool Button::IsButtonPressed()
 {
 		Vector2 mousePoint = GetMousePosition();
 		return CheckCollisionPointRec(mousePoint, m_button) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON);

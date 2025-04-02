@@ -5,17 +5,19 @@ class VectorListElement
 {
 public:
 		VectorListElement(Vector2 start, Vector2 end);
-		Vector2 GetStart();
-		Vector2 GetEnd();
-		void MoveStart(float x, float y);
-		void MoveEnd(float x, float y);
-		VectorListElement* GetNext();
-		void SetNext(VectorListElement* next);
+		~VectorListElement();
+
+		Vector2 GetStartPoint();
+		Vector2 GetEndPoint();
+		void MoveStartPoint(float x, float y);
+		void MoveEndPoint(float x, float y);
+		VectorListElement* GetNextElement();
+		void SetNextElement(VectorListElement* next);
 
 private:
-	Vector2 m_start;
-	Vector2 m_end;
-	VectorListElement* m_next;
+	Vector2 m_startPoint;
+	Vector2 m_endPoint;
+	VectorListElement* m_nextElement;
 
 };
 

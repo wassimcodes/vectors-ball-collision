@@ -1,40 +1,47 @@
 #include "VectorListElement.h"
+#include <iostream>
 
 VectorListElement::VectorListElement(Vector2 start, Vector2 end)
 {
-	m_start = start;
-	m_end = end;
-	m_next = nullptr;
+	m_startPoint = start;
+	m_endPoint = end;
+	m_nextElement = nullptr;
+	std::cout << "Vector created" << std::endl;
 }
 
-Vector2 VectorListElement::GetStart()
+VectorListElement::~VectorListElement()
 {
-	return m_start;
+	std::cout << "Vector destroyed" << std::endl;
 }
 
-Vector2 VectorListElement::GetEnd()
+Vector2 VectorListElement::GetStartPoint()
 {
-	return m_end;
+	return m_startPoint;
 }
 
-void VectorListElement::MoveStart(float x, float y)
+Vector2 VectorListElement::GetEndPoint()
 {
-	m_start.x += x;
-	m_start.y += y;
+	return m_endPoint;
 }
 
-void VectorListElement::MoveEnd(float x, float y)
+void VectorListElement::MoveStartPoint(float x, float y)
 {
-	m_end.x += x;
-	m_end.y += y;
+	m_startPoint.x += x;
+	m_startPoint.y += y;
 }
 
-VectorListElement* VectorListElement::GetNext()
+void VectorListElement::MoveEndPoint(float x, float y)
 {
-	return m_next;
+	m_endPoint.x += x;
+	m_endPoint.y += y;
 }
 
-void VectorListElement::SetNext(VectorListElement* next)
+VectorListElement* VectorListElement::GetNextElement()
 {
-	m_next = next;
+	return m_nextElement;
+}
+
+void VectorListElement::SetNextElement(VectorListElement* next)
+{
+	m_nextElement = next;
 }

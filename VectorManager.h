@@ -8,7 +8,7 @@ class VectorManager
 {
 public:
 	VectorManager();
-	void CreateVector(Button& button);
+	void CreateVector(Button button);
 	void DrawVectors();
 	void CheckSelection();
 	void DeleteSelectedVector();
@@ -18,7 +18,7 @@ public:
 private:
 	Vector2 m_start;
 	Vector2 m_end;
-	bool m_isComplete;
+	bool m_isVectorComplete;
 	bool m_isCreatingVector;
 	bool m_buttonJustPressed;
 	bool m_vectorJustCreated;

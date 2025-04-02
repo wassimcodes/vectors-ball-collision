@@ -13,17 +13,17 @@ int main()
 	SetTargetFPS(60);
 
 	Button button((screenWidth - buttonWidth) / 2, (screenHeight - buttonHeight) - 40, buttonWidth, buttonHeight, "Create Vector");
-	VectorManager vectorCreator;
+	VectorManager vectorManager;
 	
 	while (!WindowShouldClose())
 	{
 		BeginDrawing();
 		ClearBackground(BLACK);
 		button.DrawButton();
-		vectorCreator.CreateVector(button);
-		vectorCreator.CheckSelection();
-		vectorCreator.DrawVectors();
-		vectorCreator.MoveSelectedVector(3.0f);
+		vectorManager.CreateVector(button);
+		vectorManager.CheckSelection();
+		vectorManager.DrawVectors();
+		vectorManager.MoveSelectedVector(3.0f);
 		EndDrawing();
 	}
 

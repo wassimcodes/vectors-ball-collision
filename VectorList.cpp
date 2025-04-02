@@ -5,18 +5,21 @@
 VectorList::VectorList()
 {
     m_head = nullptr;
+    std::cout << "VectorList created" << std::endl;
 }
 
 VectorList::~VectorList()
 {
     VectorListElement* current = m_head;
     
-    VectorListElement* next = current->GetNext();
+    VectorListElement* next = current->GetNextElement();
     delete current;
     current = next;
+    std::cout << "VectorList destroyed" << std::endl;
+
 }
 
-void VectorList::Add(Vector2 start, Vector2 end)
+void VectorList::AddVector(Vector2 start, Vector2 end)
 {
     VectorListElement* newElement = new VectorListElement(start, end);
     if (m_head == nullptr)
@@ -26,34 +29,33 @@ void VectorList::Add(Vector2 start, Vector2 end)
     else
     {
         VectorListElement* current = m_head;
-        while (current->GetNext() != nullptr)
+        while (current->GetNextElement() != nullptr)
         {
-            current = current->GetNext();
+            current = current->GetNextElement();
         }
-        current->SetNext(newElement);
+        current->SetNextElement(newElement);
     }
 }
 
-void VectorList::Draw(VectorListElement* selectedVector, VectorListElement* secondSelectedVector)
+void VectorList::DrawVector(VectorListElement* selectedVector, VectorListElement* secondSelectedVector)
 {
     VectorListElement* currentVector = m_head;
     while (currentVector != nullptr)
     {
-        Color lineColor;
         if (currentVector == selectedVector || currentVector == secondSelectedVector)
         {
-            lineColor = RED;
+            m_lineColor = RED;
         }
         else
         {
-            lineColor = BLUE;
+            m_lineColor = BLUE;
         }
 
-        DrawCircleV(currentVector->GetStart(), 5, RED);
-        DrawLineV(currentVector->GetStart(), currentVector->GetEnd(), lineColor);
-        DrawArrow(currentVector->GetStart(), currentVector->GetEnd(), 10, lineColor);
+        DrawCircleV(currentVector->GetStartPoint(), 5, m_lineColor);
+        DrawLineV(currentVector->GetStartPoint(), currentVector->GetEndPoint(), m_lineColor);
+        DrawArrow(currentVector->GetStartPoint(), currentVector->GetEndPoint(), 10, m_lineColor);
 
-        currentVector = currentVector->GetNext();
+        currentVector = currentVector->GetNextElement();
     }
 }
 
@@ -67,11 +69,13 @@ void VectorList::SetHead(VectorListElement* newHead)
     m_head = newHead;
 }
 
-void VectorList::DrawArrow(Vector2 start, Vector2 end, float size, Color color)
+void VectorList::DrawArrow(Vector2 startPoint, Vector2 endPoint, float size, Color color)
 {
-    float angle = atan2f(end.y - start.y, end.x - start.x);
-    Vector2 arrowPoint1 = { end.x - size * cosf(angle + PI / 6), end.y - size * sinf(angle + PI / 6) };
-    Vector2 arrowPoint2 = { end.x - size * cosf(angle - PI / 6), end.y - size * sinf(angle - PI / 6) };
+    float angle = atan2f(endPoint.y - startPoint.y, endPoint.x - startPoint.x);
+    Vector2 arrowPoint1 = {endPoint.x - size * cosf(angle + PI / 4), 
+                            endPoint.y - size * sinf(angle + PI / 4)};
+    Vector2 arrowPoint2 = {endPoint.x - size * cosf(angle - PI / 4),
+                            endPoint.y - size * sinf(angle - PI / 4)};
 
-    DrawTriangle(end, arrowPoint1, arrowPoint2, color);
+    DrawTriangle(endPoint, arrowPoint1, arrowPoint2, color);
 }

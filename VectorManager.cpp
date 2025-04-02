@@ -3,7 +3,7 @@
 
 VectorManager::VectorManager()
 {
-    m_isComplete = false;
+    m_isVectorComplete = false;
     m_isCreatingVector = false;
     m_buttonJustPressed = false;
 	m_vectorJustCreated = false;
@@ -11,12 +11,12 @@ VectorManager::VectorManager()
 	m_secondSelectedVector = nullptr;
 }
 
-void VectorManager::CreateVector(Button& button)
+void VectorManager::CreateVector(Button button)
 {
-    if (button.IsPressed())
+    if (button.IsButtonPressed())
     {
         m_isCreatingVector = true;
-        m_isComplete = false;
+        m_isVectorComplete = false;
         m_start = { 0,0 };
         m_end = { 0, 0 };
         m_buttonJustPressed = true;
@@ -27,25 +27,24 @@ void VectorManager::CreateVector(Button& button)
         if (m_isCreatingVector)
         {
             m_isCreatingVector = false;
-            m_isComplete = false;
+            m_isVectorComplete = false;
             m_start = { 0,0 };
             m_end = { 0, 0 };
         }
-		else if (m_selectedVector != nullptr)
+		else if (m_selectedVector != NULL)
         {
             DeleteSelectedVector();
         }
     }
 
     
-
     if (m_isCreatingVector && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
     {
         if (m_buttonJustPressed)
         {
             m_buttonJustPressed = false;
         }
-        else if (!m_isComplete)
+        else if (!m_isVectorComplete)
         {
             if (m_start.x == 0 && m_start.y == 0)
             {
@@ -54,9 +53,9 @@ void VectorManager::CreateVector(Button& button)
             else
             {
                 m_end = GetMousePosition();
-                m_isComplete = true;
+                m_isVectorComplete = true;
                 m_isCreatingVector = false;
-                m_vectors.Add(m_start, m_end);
+                m_vectors.AddVector(m_start, m_end);
 				m_vectorJustCreated = true;
             }
         }
@@ -65,7 +64,7 @@ void VectorManager::CreateVector(Button& button)
 
 void VectorManager::DrawVectors()
 {
-    m_vectors.Draw(m_selectedVector, m_secondSelectedVector);
+    m_vectors.DrawVector(m_selectedVector, m_secondSelectedVector);
 }
 
 void VectorManager::CheckSelection()
@@ -83,26 +82,22 @@ void VectorManager::CheckSelection()
 
     Vector2 mousePos = GetMousePosition();
     bool vectorSelected = false;
-    bool mouseClicked = IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
 
-    VectorListElement* current = m_vectors.GetHead();
+    VectorListElement* currentVector = m_vectors.GetHead();
 
-    while (current != nullptr)
+    while (currentVector != nullptr)
     {
-        Vector2 start = current->GetStart();
-        Vector2 end = current->GetEnd();
-
-        if (CheckCollisionPointLine(mousePos, start, end, 30))
+        if (CheckCollisionPointLine(mousePos, currentVector->GetStartPoint(), currentVector->GetEndPoint(), 30))
         {
-            if (mouseClicked)
+            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
             {
                 if (m_selectedVector == nullptr)
                 {
-                    m_selectedVector = current;
+                    m_selectedVector = currentVector;
                 }
-                else if (m_selectedVector != current)
+                else if (m_selectedVector != currentVector)
                 {
-                    m_secondSelectedVector = current;
+                    m_secondSelectedVector = currentVector;
                     CompareVectors();
                 }
                 vectorSelected = true;
@@ -110,14 +105,13 @@ void VectorManager::CheckSelection()
 
             break;
         }
-        current = current->GetNext();
+        currentVector = currentVector->GetNextElement();
     }
 
-    if (mouseClicked && !vectorSelected)
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !vectorSelected)
     {
         m_selectedVector = nullptr;
 		m_secondSelectedVector = nullptr;
-        std::cout << "No vector selected" << std::endl;
     }
 }
 
@@ -125,24 +119,24 @@ void VectorManager::DeleteSelectedVector()
 {
     if (m_vectors.GetHead() == m_selectedVector)
     {
-        VectorListElement* next = m_selectedVector->GetNext();
+        VectorListElement* nextVec = m_selectedVector->GetNextElement();
 		delete m_selectedVector;
-        m_vectors.SetHead(next);
+        m_vectors.SetHead(nextVec);
     }
 
     else
     {
-        VectorListElement* prev = m_vectors.GetHead();
-        while (prev != nullptr && prev->GetNext() != m_selectedVector)
+        VectorListElement* prevVec = m_vectors.GetHead();
+        while (prevVec != nullptr && prevVec->GetNextElement() != m_selectedVector)
         {
-            prev = prev->GetNext();
+            prevVec = prevVec->GetNextElement();
         }
 
-        if (prev != nullptr)
+        if (prevVec != nullptr)
         {
-            VectorListElement* next = m_selectedVector->GetNext();
+            VectorListElement* next = m_selectedVector->GetNextElement();
             delete m_selectedVector;
-            prev->SetNext(next);
+            prevVec->SetNextElement(next);
         }
     }
 
@@ -151,53 +145,44 @@ void VectorManager::DeleteSelectedVector()
 
 void VectorManager::MoveSelectedVector(float moveSpeed)
 {
-	if (m_selectedVector == nullptr)
-	{
-		return;
-	}
 	if (IsKeyDown(KEY_W))
 	{
-		m_selectedVector->MoveStart(0, -moveSpeed);
-		m_selectedVector->MoveEnd(0, -moveSpeed);
+		m_selectedVector->MoveStartPoint(0, -moveSpeed);
+		m_selectedVector->MoveEndPoint(0, -moveSpeed);
 	}
 	if (IsKeyDown(KEY_S))
 	{
-		m_selectedVector->MoveStart(0, moveSpeed);
-		m_selectedVector->MoveEnd(0, moveSpeed);
+		m_selectedVector->MoveStartPoint(0, moveSpeed);
+		m_selectedVector->MoveEndPoint(0, moveSpeed);
 	}
 	if (IsKeyDown(KEY_A))
 	{
-		m_selectedVector->MoveStart(-moveSpeed, 0);
-		m_selectedVector->MoveEnd(-moveSpeed, 0);
+		m_selectedVector->MoveStartPoint(-moveSpeed, 0);
+		m_selectedVector->MoveEndPoint(-moveSpeed, 0);
 	}
 	if (IsKeyDown(KEY_D))
 	{
-		m_selectedVector->MoveStart(moveSpeed, 0);
-		m_selectedVector->MoveEnd(moveSpeed, 0);
+		m_selectedVector->MoveStartPoint(moveSpeed, 0);
+		m_selectedVector->MoveEndPoint(moveSpeed, 0);
 	}
 }
 
 void VectorManager::CompareVectors()
 {
-    if (m_selectedVector == nullptr || m_secondSelectedVector == nullptr)
-    {
-        return;
-    }
-        
+    Vector2 startPoint1 = m_selectedVector->GetStartPoint();
+    Vector2 endPoint1 = m_selectedVector->GetEndPoint();
+    Vector2 startPoint2 = m_secondSelectedVector->GetStartPoint();
+    Vector2 endPoint2 = m_secondSelectedVector->GetEndPoint();
 
-    Vector2 start1 = m_selectedVector->GetStart();
-    Vector2 end1 = m_selectedVector->GetEnd();
-    Vector2 start2 = m_secondSelectedVector->GetStart();
-    Vector2 end2 = m_secondSelectedVector->GetEnd();
+    Vector2 vector1 = { endPoint1.x - startPoint1.x, endPoint1.y - startPoint1.y };
+    Vector2 vector2 = { endPoint2.x - startPoint2.x, endPoint2.y - startPoint2.y };
 
-    Vector2 vec1 = { end1.x - start1.x, end1.y - start1.y };
-    Vector2 vec2 = { end2.x - start2.x, end2.y - start2.y };
-
-    float dotProduct = vec1.x * vec2.x + vec1.y * vec2.y;
-    Vector2 sum = { vec1.x + vec2.x, vec1.y + vec2.y };
-
-    std::cout << "Vector 1: (" << vec1.x << ", " << vec1.y << ")" << std::endl;
-    std::cout << "Vector 2: (" << vec2.x << ", " << vec2.y << ")" << std::endl;
+    float dotProduct = vector1.x * vector2.x + vector1.y * vector2.y;
+    Vector2 sum = { vector1.x + vector2.x, vector1.y + vector2.y };
+	std::cout << "Vector 1 Coordinates: (" << startPoint1.x << ", " << startPoint1.y << "), (" << endPoint1.x << ", " << endPoint1.y << ")" << std::endl;
+	std::cout << "Vector 2 Coordinates: (" << startPoint2.x << ", " << startPoint2.y << "), (" << endPoint2.x << ", " << endPoint2.y << ")" << std::endl;
+    std::cout << "Vector 1: (" << vector1.x << ", " << vector1.y << ")" << std::endl;
+    std::cout << "Vector 2: (" << vector2.x << ", " << vector2.y << ")" << std::endl;
     std::cout << "Dot Product: " << dotProduct << std::endl;
     std::cout << "Sum: (" << sum.x << ", " << sum.y << ")" << std::endl;
 }
