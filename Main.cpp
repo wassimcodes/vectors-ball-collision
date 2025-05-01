@@ -22,6 +22,7 @@ int main()
 
 	while (!WindowShouldClose())
 	{
+		// TP1
 		BeginDrawing();
 		ClearBackground(BLACK);
 		button.DrawButton();
@@ -30,11 +31,12 @@ int main()
 		vectorManager.DrawVectors();
 		vectorManager.MoveSelectedVector(3.0f);
 
+		// TP2
+		ball.DrawBall();
 		ball.LaunchBall(isMouseDragging, dragStartPos, 1.5f);
 		ball.UpdatePosition(GetFrameTime());
 		ball.WindowCollision(screenWidth, screenHeight);
 		ball.VectorCollision(vectorManager.GetVectorList());
-		ball.DrawBall();
 
 		EndDrawing();
 	}
