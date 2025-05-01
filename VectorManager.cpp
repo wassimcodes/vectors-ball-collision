@@ -28,8 +28,6 @@ void VectorManager::CreateVector(Button button)
         {
             m_isCreatingVector = false;
             m_isVectorComplete = false;
-            m_start = { 0,0 };
-            m_end = { 0, 0 };
         }
 		else if (m_selectedVector != NULL)
         {
@@ -83,7 +81,7 @@ void VectorManager::CheckSelection()
     Vector2 mousePos = GetMousePosition();
     bool vectorSelected = false;
 
-    VectorListElement* currentVector = m_vectors.GetHead();
+    VectorListElement* currentVector = m_vectors.GetFirstElement();
 
     while (currentVector != nullptr)
     {
@@ -117,16 +115,16 @@ void VectorManager::CheckSelection()
 
 void VectorManager::DeleteSelectedVector()
 {
-    if (m_vectors.GetHead() == m_selectedVector)
+    if (m_vectors.GetFirstElement() == m_selectedVector)
     {
         VectorListElement* nextVec = m_selectedVector->GetNextElement();
 		delete m_selectedVector;
-        m_vectors.SetHead(nextVec);
+        m_vectors.SetFirstElement(nextVec);
     }
 
     else
     {
-        VectorListElement* prevVec = m_vectors.GetHead();
+        VectorListElement* prevVec = m_vectors.GetFirstElement();
         while (prevVec != nullptr && prevVec->GetNextElement() != m_selectedVector)
         {
             prevVec = prevVec->GetNextElement();
@@ -185,5 +183,10 @@ void VectorManager::CompareVectors()
     std::cout << "Vector 2: (" << vector2.x << ", " << vector2.y << ")" << std::endl;
     std::cout << "Dot Product: " << dotProduct << std::endl;
     std::cout << "Sum: (" << sum.x << ", " << sum.y << ")" << std::endl;
+}
+
+VectorList* VectorManager::GetVectorList()
+{
+    return &m_vectors;
 }
 

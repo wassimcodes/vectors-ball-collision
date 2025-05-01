@@ -71,20 +71,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\Cpp\AlgebreVectorielle\tp1_algebra\externals\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Cpp\AlgebreVectorielle\tp1_algebra\externals\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)externals\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)externals\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>D:\Cpp\AlgebreVectorielle\tp1_algebra\externals\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Cpp\AlgebreVectorielle\tp1_algebra\externals\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)externals\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)externals\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\Cpp\AlgebreVectorielle\tp1_algebra\externals\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Cpp\AlgebreVectorielle\tp1_algebra\externals\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)externals\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)externals\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>D:\Cpp\AlgebreVectorielle\tp1_algebra\externals\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Cpp\AlgebreVectorielle\tp1_algebra\externals\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)externals\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)externals\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -147,12 +147,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Ball.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="VectorList.h" />
     <ClInclude Include="VectorListElement.h" />
     <ClInclude Include="VectorManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="VectorList.cpp" />
     <ClCompile Include="VectorListElement.cpp" />

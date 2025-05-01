@@ -14,6 +14,8 @@ public:
 	void DeleteSelectedVector();
 	void MoveSelectedVector(float moveSpeed);
 	void CompareVectors();
+	VectorList* GetVectorList();
+
 
 private:
 	Vector2 m_start;
