@@ -6,7 +6,7 @@ This project demonstrates a simple physics simulation where vectors can be added
 
 ### Adding Vectors
 
-You can add vectors by pressing the **Add Vector** button. The ball will be pulled in the direction of the vector you add and will move in the opposite direction of the pull. It can collide with both the edges of the screen and the vectors.
+You can add vectors by pressing the **Add Vector** button. The ball will be pulled in the direction of the mouse and will move in the opposite direction of the pull. It can collide with both the edges of the screen and the vectors.
 
 ![GIF1](resources/gif1.gif)
 
