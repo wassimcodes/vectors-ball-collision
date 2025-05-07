@@ -22,7 +22,7 @@ int main()
 
 	while (!WindowShouldClose())
 	{
-		// TP1
+		// Vector manipulation
 		BeginDrawing();
 		ClearBackground(BLACK);
 		button.DrawButton();
@@ -31,7 +31,7 @@ int main()
 		vectorManager.DrawVectors();
 		vectorManager.MoveSelectedVector(3.0f);
 
-		// TP2
+		// Ball collision
 		ball.DrawBall();
 		ball.LaunchBall(isMouseDragging, dragStartPos, 1.5f);
 		ball.UpdatePosition(GetFrameTime());

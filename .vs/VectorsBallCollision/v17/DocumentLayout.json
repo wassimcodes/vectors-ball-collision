@@ -1,7 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Cpp\\VectorsBallCollision\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{28532CD2-C958-4BB9-BA8C-E6C9C4BDA497}|VectorsBallCollision.vcxproj|D:\\Cpp\\VectorsBallCollision\\scripts\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{28532CD2-C958-4BB9-BA8C-E6C9C4BDA497}|VectorsBallCollision.vcxproj|solutionrelative:scripts\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 271,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,6 +27,19 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Main.cpp",
+              "DocumentMoniker": "D:\\Cpp\\VectorsBallCollision\\scripts\\Main.cpp",
+              "RelativeDocumentMoniker": "scripts\\Main.cpp",
+              "ToolTip": "D:\\Cpp\\VectorsBallCollision\\scripts\\Main.cpp",
+              "RelativeToolTip": "scripts\\Main.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-07T15:56:21.197Z",
+              "EditorCaption": ""
             }
           ]
         }
