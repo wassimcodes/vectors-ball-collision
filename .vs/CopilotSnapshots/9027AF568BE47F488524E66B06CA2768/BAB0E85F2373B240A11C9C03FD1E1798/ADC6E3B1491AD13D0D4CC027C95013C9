@@ -1,0 +1,100 @@
+﻿#include "Ball.h"
+#include "math.h"
+
+Ball::Ball(Vector2 startPos, float startRadius)
+{
+	m_position = startPos;
+	m_velocity = {0, 0};
+	m_radius = startRadius;
+}
+
+void Ball::UpdatePosition(float time)
+{
+	m_position.x += m_velocity.x * time;
+	m_position.y += m_velocity.y * time;
+}
+
+void Ball::DrawBall()
+{
+	DrawCircleV(m_position, m_radius, YELLOW);
+}
+
+void Ball::WindowCollision(int screenWidth, int screenHeight)
+{
+    if (m_position.x - m_radius < 0 || m_position.x + m_radius >= screenWidth)
+    {
+        m_velocity.x *= -1;
+    }
+    if (m_position.y - m_radius < 0 || m_position.y + m_radius >= screenHeight)
+    {
+        m_velocity.y *= -1;
+    }
+}
+
+void Ball::VectorCollision(VectorList* vectorList)
+{
+    VectorListElement* currentVector = vectorList->GetFirstElement();
+
+    while (currentVector != nullptr)
+    {
+        Vector2 start = currentVector->GetStartPoint();
+        Vector2 end = currentVector->GetEndPoint();
+
+        Vector2 normal = { -(end.y - start.y), end.x - start.x };
+        float length = sqrt(normal.x * normal.x + normal.y * normal.y);
+        if (length == 0)
+        {
+            currentVector = currentVector->GetNextElement();
+            continue;
+        }
+        normal = { normal.x / length, normal.y / length };
+
+        float dx = end.x - start.x;
+        float dy = end.y - start.y;
+        float lengthSquared = dx * dx + dy * dy;
+
+        float t = ((m_position.x - start.x) * dx + (m_position.y - start.y) * dy) / lengthSquared;
+        if (t < 0 || t > 1)
+        {
+            currentVector = currentVector->GetNextElement();
+            continue;
+        }
+
+        Vector2 closestPoint = { start.x + t * dx, start.y + t * dy };
+        Vector2 distanceVec = { m_position.x - closestPoint.x, m_position.y - closestPoint.y };
+
+        float distance = sqrt(distanceVec.x * distanceVec.x + distanceVec.y * distanceVec.y);
+        if (distance < m_radius)
+        {
+            float dotProduct = m_velocity.x * normal.x + m_velocity.y * normal.y;
+
+            m_velocity.x = m_velocity.x - 2 * dotProduct * normal.x;
+            m_velocity.y = m_velocity.y - 2 * dotProduct * normal.y;
+
+            break;
+        }
+
+        currentVector = currentVector->GetNextElement();
+    }
+}
+
+
+void Ball::LaunchBall(bool& isMouseDragging, Vector2& dragStartPos, float velocityMultiplier)
+{
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    {
+        isMouseDragging = true;
+        dragStartPos = GetMousePosition();
+    }
+    if (isMouseDragging)
+    {
+        Vector2 currentMousePos = GetMousePosition();
+        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+        {
+            isMouseDragging = false;
+            Vector2 dragVector = { dragStartPos.x - currentMousePos.x, dragStartPos.y - currentMousePos.y };
+            m_velocity = { dragVector.x * velocityMultiplier, dragVector.y * velocityMultiplier };
+        }
+    }
+}
+
