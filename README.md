@@ -12,11 +12,11 @@ You can add vectors by pressing the **Add Vector** button. The ball will be pull
 
 ### Removing Vectors
 
-You can remove vectors by pressing on them or using the **Backspace** key. This allows for dynamic interactions with the vectors in the scene.
+You can remove vectors by pressing on them and using the **Backspace** key.
 
 ### Vector Operations
 
-When you press two vectors, you’ll see the following results:
+When you press two vectors, you’ll see the following results printed in your console:
 
 * The **sum** of the vectors.
 * Their **dot product**.
